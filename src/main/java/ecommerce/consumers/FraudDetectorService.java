@@ -1,4 +1,4 @@
-package ecommerce;
+package ecommerce.consumers;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -38,7 +38,6 @@ public class FraudDetectorService {
                 }
             }
         }
-
     }
 
     private static Properties getProperties() {
