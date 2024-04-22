@@ -19,7 +19,7 @@ public class NewOrderMain {
 
     private static void produceOrder(KafkaProducer<String, String> producer) throws ExecutionException, InterruptedException {
         String value = "order 127;user douglas.silva;usd 199.53";
-        ProducerRecord<String, String> record = new ProducerRecord<>("ECOMMERCE_NEW_ORDER", value, value);
+        ProducerRecord<String, String> record = new ProducerRecord<>("ECOMMERCE_NEW_ORDER_TEST", value, value);
         producer.send(record, (data, error) -> {
             if (!Objects.isNull(error)) {
                 error.printStackTrace();
@@ -36,7 +36,7 @@ public class NewOrderMain {
                 "destination='douglas.silva@email.com.br', " +
                 "body='Thank you for purchasing with us! We'll be processing your order shortly!'" +
                 "}";
-        ProducerRecord<String, String> record = new ProducerRecord<>("ECOMMERCE_SEND_EMAIL", message, message);
+        ProducerRecord<String, String> record = new ProducerRecord<>("ECOMMERCE_SEND_EMAIL_TEST", message, message);
         producer.send(record, (data, error) -> {
             if (!Objects.isNull(error)) {
                 error.printStackTrace();

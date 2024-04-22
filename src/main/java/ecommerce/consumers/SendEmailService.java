@@ -14,7 +14,7 @@ public class SendEmailService {
 
     public static void main(String[] args) {
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(getProperties());
-        consumer.subscribe(Collections.singletonList("ECOMMERCE_SEND_EMAIL"));
+        consumer.subscribe(Collections.singletonList("ECOMMERCE_SEND_EMAIL_TEST"));
 
         while(true) {
             ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(100));
