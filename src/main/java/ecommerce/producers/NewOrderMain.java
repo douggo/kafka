@@ -7,6 +7,7 @@ import org.apache.kafka.common.serialization.StringSerializer;
 
 import java.util.Objects;
 import java.util.Properties;
+import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 public class NewOrderMain {
@@ -18,15 +19,18 @@ public class NewOrderMain {
     }
 
     private static void produceOrder(KafkaProducer<String, String> producer) throws ExecutionException, InterruptedException {
-        String value = "order 127;user douglas.silva;usd 199.53";
-        ProducerRecord<String, String> record = new ProducerRecord<>("ECOMMERCE_NEW_ORDER_TEST", value, value);
-        producer.send(record, (data, error) -> {
-            if (!Objects.isNull(error)) {
-                error.printStackTrace();
-                return;
-            }
-            System.out.println("SUCESSO = { Tópico: " + data.topic() + " Timestamp: " + data.timestamp() + " Posição: " + data.offset() + " }");
-        }).get();
+        for(int i = 0; i < 10; i++) {
+            String id = UUID.randomUUID().toString();
+            String value = id + ";order 127;user douglas.silva;usd 199.53";
+            ProducerRecord<String, String> record = new ProducerRecord<>("ECOMMERCE_NEW_ORDER_TEST", id, value);
+            producer.send(record, (data, error) -> {
+                if (!Objects.isNull(error)) {
+                    error.printStackTrace();
+                    return;
+                }
+                System.out.println("SUCESSO = { Tópico: " + data.topic() + " Timestamp: " + data.timestamp() + " Posição: " + data.offset() + " }");
+            }).get();
+        }
     }
 
     private static void produceEmail(KafkaProducer<String, String> producer) throws ExecutionException, InterruptedException {
