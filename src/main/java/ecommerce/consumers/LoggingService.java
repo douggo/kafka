@@ -14,8 +14,8 @@ public class LoggingService {
 
     public static void main(String[] args) {
         ArrayList<String> consumerSubscriptionList = new ArrayList<>();
-        consumerSubscriptionList.add("ECOMMERCE_NEW_ORDER_TEST");
-        consumerSubscriptionList.add("ECOMMERCE_SEND_EMAIL_TEST");
+        consumerSubscriptionList.add("ECOMMERCE_NEW_ORDER");
+        consumerSubscriptionList.add("ECOMMERCE_SEND_EMAIL");
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(getProperties());
         consumer.subscribe(consumerSubscriptionList);
 
@@ -24,7 +24,7 @@ public class LoggingService {
             if (records.isEmpty()) {
                 continue;
             } else {
-                System.out.println(records.count() + " were identified for logging...");
+                System.out.println("A record was identified for logging...");
                 int index = 1;
                 for(ConsumerRecord<String, String> record: records) {
                     System.out.println("----------------------------------------------");

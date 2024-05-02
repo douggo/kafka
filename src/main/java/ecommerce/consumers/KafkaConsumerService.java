@@ -30,7 +30,7 @@ public class KafkaConsumerService implements Closeable {
             if(records.isEmpty()) {
                 continue;
             } else {
-                System.out.println(records.count() + " records found");
+                System.out.println("A record was found");
                 for(ConsumerRecord<String, String> record: records) {
                     this.parse.consume(record);
                 }

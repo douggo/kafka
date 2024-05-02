@@ -7,7 +7,7 @@ public class FraudDetectorService {
     public static void main(String[] args) {
         FraudDetectorService fraudService = new FraudDetectorService();
         try(KafkaConsumerService consumerService = new KafkaConsumerService(
-                "ECOMMERCE_NEW_ORDER_TEST",
+                "ECOMMERCE_NEW_ORDER",
                 FraudDetectorService.class.getSimpleName(),
                 fraudService::parse)) {
             consumerService.run();

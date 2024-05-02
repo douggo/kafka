@@ -18,7 +18,7 @@ public class NewOrderMain {
 
     private static void produceOrder(KafkaDispatcher dispatcher, String id) throws ExecutionException, InterruptedException {
         String value = id + ";order 127;user douglas.silva;usd 199.53";
-        dispatcher.send("ECOMMERCE_NEW_ORDER_TEST", id, value);
+        dispatcher.send("ECOMMERCE_NEW_ORDER", id, value);
     }
 
     private static void produceEmail(KafkaDispatcher dispatcher, String id) throws ExecutionException, InterruptedException {
@@ -28,7 +28,7 @@ public class NewOrderMain {
                 "destination='douglas.silva@email.com.br', " +
                 "body='Thank you for purchasing with us! We'll be processing your order shortly!'" +
                 "}";
-        dispatcher.send("ECOMMERCE_SEND_EMAIL_TEST", id, message);
+        dispatcher.send("ECOMMERCE_SEND_EMAIL", id, message);
 
     }
 

@@ -7,7 +7,7 @@ public class SendEmailService {
     public static void main(String[] args) {
         SendEmailService sendEmailService = new SendEmailService();
         KafkaConsumerService consumerService = new KafkaConsumerService(
-                "ECOMMERCE_SEND_EMAIL_TEST",
+                "ECOMMERCE_SEND_EMAIL",
                 SendEmailService.class.getSimpleName(),
                 sendEmailService::parse);
         consumerService.run();
