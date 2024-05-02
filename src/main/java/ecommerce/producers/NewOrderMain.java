@@ -14,23 +14,23 @@ public class NewOrderMain {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         KafkaProducer<String, String> producer = new KafkaProducer<>(getProperties());
-        produceOrder(producer);
-        produceEmail(producer);
+        for(int i = 0; i < 10; i++) {
+            produceOrder(producer);
+            produceEmail(producer);
+        }
     }
 
     private static void produceOrder(KafkaProducer<String, String> producer) throws ExecutionException, InterruptedException {
-        for(int i = 0; i < 10; i++) {
-            String id = UUID.randomUUID().toString();
-            String value = id + ";order 127;user douglas.silva;usd 199.53";
-            ProducerRecord<String, String> record = new ProducerRecord<>("ECOMMERCE_NEW_ORDER_TEST", id, value);
-            producer.send(record, (data, error) -> {
-                if (!Objects.isNull(error)) {
-                    error.printStackTrace();
-                    return;
-                }
-                System.out.println("SUCESSO = { Tópico: " + data.topic() + " Timestamp: " + data.timestamp() + " Posição: " + data.offset() + " }");
-            }).get();
-        }
+        String id = UUID.randomUUID().toString();
+        String value = id + ";order 127;user douglas.silva;usd 199.53";
+        ProducerRecord<String, String> record = new ProducerRecord<>("ECOMMERCE_NEW_ORDER_TEST", id, value);
+        producer.send(record, (data, error) -> {
+            if (!Objects.isNull(error)) {
+                error.printStackTrace();
+                return;
+            }
+            System.out.println("SUCESSO = { Tópico: " + data.topic() + " Timestamp: " + data.timestamp() + " Posição: " + data.offset() + " }");
+        }).get();
     }
 
     private static void produceEmail(KafkaProducer<String, String> producer) throws ExecutionException, InterruptedException {
