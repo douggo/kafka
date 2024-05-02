@@ -6,11 +6,12 @@ public class FraudDetectorService {
 
     public static void main(String[] args) {
         FraudDetectorService fraudService = new FraudDetectorService();
-        KafkaConsumerService consumerService = new KafkaConsumerService(
+        try(KafkaConsumerService consumerService = new KafkaConsumerService(
                 "ECOMMERCE_NEW_ORDER_TEST",
                 FraudDetectorService.class.getSimpleName(),
-                fraudService::parse);
-        consumerService.run();
+                fraudService::parse)) {
+            consumerService.run();
+        }
     }
 
     public void parse(ConsumerRecord<String, String> record) {
