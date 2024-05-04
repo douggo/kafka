@@ -1,5 +1,6 @@
 package ecommerce.producers;
 
+import ecommerce.model.GsonSerializer;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -10,16 +11,16 @@ import java.util.Objects;
 import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 
-public class KafkaDispatcher implements Closeable {
+public class KafkaDispatcher<T> implements Closeable {
 
-    KafkaProducer<String, String> producer;
+    KafkaProducer<String, T> producer;
 
-    KafkaDispatcher() {
+    public KafkaDispatcher() {
         this.producer = new KafkaProducer<>(this.getProperties());
     }
 
-    public void send(String topic, String id, String value) throws ExecutionException, InterruptedException {
-        ProducerRecord<String, String> record = new ProducerRecord<>(topic, id, value);
+    public void send(String topic, T value) throws ExecutionException, InterruptedException {
+        ProducerRecord<String, T> record = new ProducerRecord<>(topic, value);
         producer.send(record, (data, error) -> {
             if (!Objects.isNull(error)) {
                 error.printStackTrace();
@@ -33,7 +34,7 @@ public class KafkaDispatcher implements Closeable {
         Properties properties = new Properties();
         properties.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
         properties.setProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
-        properties.setProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+        properties.setProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, GsonSerializer.class.getName());
         return properties;
     }
 
