@@ -14,7 +14,6 @@ public class SendEmailService {
     }
 
     public void parse(ConsumerRecord<String, String> record) {
-        System.out.println("----------------------------------------------");
         System.out.println("Key::" + record.key());
         System.out.println("Value::" + record.value());
         System.out.println("Partition::" + record.partition());

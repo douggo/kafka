@@ -2,6 +2,8 @@ package ecommerce.consumers;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 
+import java.util.regex.Pattern;
+
 public class FraudDetectorService {
 
     public static void main(String[] args) {
@@ -15,7 +17,6 @@ public class FraudDetectorService {
     }
 
     public void parse(ConsumerRecord<String, String> record) {
-        System.out.println("---------------------------------------");
         System.out.println("Key::" + record.key());
         System.out.println("Value::" + record.value());
         System.out.println("Partition::" + record.partition());

@@ -13,40 +13,21 @@ import java.util.regex.Pattern;
 public class LoggingService {
 
     public static void main(String[] args) {
-        ArrayList<String> consumerSubscriptionList = new ArrayList<>();
-        consumerSubscriptionList.add("ECOMMERCE_NEW_ORDER");
-        consumerSubscriptionList.add("ECOMMERCE_SEND_EMAIL");
-        KafkaConsumer<String, String> consumer = new KafkaConsumer<>(getProperties());
-        consumer.subscribe(consumerSubscriptionList);
-
-        while(true) {
-            ConsumerRecords<String, String> records = consumer.poll(100);
-            if (records.isEmpty()) {
-                continue;
-            } else {
-                System.out.println("A record was identified for logging...");
-                int index = 1;
-                for(ConsumerRecord<String, String> record: records) {
-                    System.out.println("----------------------------------------------");
-                    System.out.println("LOG ("+ index + ")");
-                    System.out.println("Topic::" + record.topic());
-                    System.out.println("Key::" + record.key());
-                    System.out.println("Value::" + record.value());
-                    System.out.println("Partition::" + record.partition());
-                    System.out.println("Offset::" + record.offset());
-                    index++;
-                }
-            }
+        LoggingService loggingService = new LoggingService();
+        try (KafkaConsumerService consumerService = new KafkaConsumerService(
+                Pattern.compile("ECOMMERCE.*"),
+                loggingService.getClass().getSimpleName(),
+                loggingService::parse)) {
+            consumerService.run();
         }
     }
 
-    private static Properties getProperties() {
-        Properties properties = new Properties();
-        properties.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
-        properties.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
-        properties.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
-        properties.setProperty(ConsumerConfig.GROUP_ID_CONFIG, LoggingService.class.getSimpleName());
-        return properties;
+    public void parse(ConsumerRecord<String, String> record) {
+        System.out.println("LOG (" + record.topic() + ")");
+        System.out.println("Key::" + record.key());
+        System.out.println("Value::" + record.value());
+        System.out.println("Partition::" + record.partition());
+        System.out.println("Offset::" + record.offset());
     }
 
 }

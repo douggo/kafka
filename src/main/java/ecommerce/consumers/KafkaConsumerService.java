@@ -12,6 +12,7 @@ import java.time.Duration;
 import java.util.Collections;
 import java.util.Properties;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 public class KafkaConsumerService implements Closeable {
 
@@ -24,16 +25,25 @@ public class KafkaConsumerService implements Closeable {
         this.parse = parse;
     }
 
+    public KafkaConsumerService(Pattern topic, String className, ConsumerFunction parse) {
+        this.consumer = new KafkaConsumer<>(this.getProperties(className));
+        this.consumer.subscribe(topic);
+        this.parse = parse;
+    }
+
     public void run() {
         while(true) {
             ConsumerRecords<String, String> records = this.consumer.poll(Duration.ofMillis(100));
             if(records.isEmpty()) {
                 continue;
             } else {
+                System.out.println("----------------------------------------------");
                 System.out.println("A record was found");
+                System.out.println();
                 for(ConsumerRecord<String, String> record: records) {
                     this.parse.consume(record);
                 }
+                System.out.println();
             }
         }
     }

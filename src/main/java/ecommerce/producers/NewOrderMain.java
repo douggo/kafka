@@ -24,7 +24,7 @@ public class NewOrderMain {
     private static void produceOrder(KafkaDispatcher<Order> dispatcher, String id) throws ExecutionException, InterruptedException {
         BigDecimal amount = BigDecimal.valueOf(Math.random() * 5000);
         Order order = new Order("douglas.silva", id, amount);
-        dispatcher.send("ECOMMERCE_NEW_ORDER", order);
+        dispatcher.send("ECOMMERCE_NEW_ORDER", id, order);
     }
 
     private static void produceEmail(KafkaDispatcher<String> dispatcher, String id) throws ExecutionException, InterruptedException {
@@ -34,7 +34,7 @@ public class NewOrderMain {
                 "destination='douglas.silva@email.com.br', " +
                 "body='Thank you for purchasing with us! We'll be processing your order shortly!'" +
                 "}";
-        dispatcher.send("ECOMMERCE_SEND_EMAIL", message);
+        dispatcher.send("ECOMMERCE_SEND_EMAIL", id, message);
     }
 
 }
