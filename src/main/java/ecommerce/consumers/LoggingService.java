@@ -7,6 +7,8 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
@@ -14,10 +16,16 @@ public class LoggingService {
 
     public static void main(String[] args) {
         LoggingService loggingService = new LoggingService();
+
+        HashMap<String, String> overrideProperties = new HashMap<>();
+        overrideProperties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+
         try (KafkaConsumerService consumerService = new KafkaConsumerService(
                 Pattern.compile("ECOMMERCE.*"),
                 loggingService.getClass().getSimpleName(),
-                loggingService::parse)) {
+                loggingService::parse,
+                String.class,
+                overrideProperties)) {
             consumerService.run();
         }
     }

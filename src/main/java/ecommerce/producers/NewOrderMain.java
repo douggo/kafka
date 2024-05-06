@@ -1,5 +1,6 @@
 package ecommerce.producers;
 
+import ecommerce.model.Email;
 import ecommerce.model.Order;
 
 import java.math.BigDecimal;
@@ -10,7 +11,7 @@ public class NewOrderMain {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         try(KafkaDispatcher<Order> orderDispatcher = new KafkaDispatcher<>()) {
-            try(KafkaDispatcher<String> emailDispatcher = new KafkaDispatcher<>()) {
+            try(KafkaDispatcher<Email> emailDispatcher = new KafkaDispatcher<>()) {
                 String id = "";
                 for(int i = 0; i < 10; i++) {
                     id = UUID.randomUUID().toString();
@@ -27,14 +28,13 @@ public class NewOrderMain {
         dispatcher.send("ECOMMERCE_NEW_ORDER", id, order);
     }
 
-    private static void produceEmail(KafkaDispatcher<String> dispatcher, String id) throws ExecutionException, InterruptedException {
-        String message = "{" +
-                "'id'='"+ id + "', " +
-                "subject='ECommerce', " +
-                "destination='douglas.silva@email.com.br', " +
-                "body='Thank you for purchasing with us! We'll be processing your order shortly!'" +
-                "}";
-        dispatcher.send("ECOMMERCE_SEND_EMAIL", id, message);
+    private static void produceEmail(KafkaDispatcher<Email> dispatcher, String id) throws ExecutionException, InterruptedException {
+        Email email = new Email(
+                "Your order was submitted successfully",
+                "douglas.silva@gmail.com",
+                "Thank you for purchasing with us! We'll be processing your order shortly!"
+        );
+        dispatcher.send("ECOMMERCE_SEND_EMAIL", id, email);
     }
 
 }
