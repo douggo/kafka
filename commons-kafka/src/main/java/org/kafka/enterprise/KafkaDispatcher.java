@@ -1,6 +1,5 @@
-package ecommerce.producers;
+package org.kafka.enterprise;
 
-import ecommerce.model.GsonSerializer;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -42,4 +41,5 @@ public class KafkaDispatcher<T> implements Closeable {
     public void close() {
         this.producer.close();
     }
+
 }

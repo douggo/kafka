@@ -1,6 +1,6 @@
-package ecommerce.consumers;
+package org.kafka.enterprise;
 
-import ecommerce.model.GsonDeserializer;
+
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -9,10 +9,7 @@ import org.apache.kafka.common.serialization.StringDeserializer;
 
 import java.io.Closeable;
 import java.time.Duration;
-import java.util.Collections;
-import java.util.Map;
-import java.util.Properties;
-import java.util.UUID;
+import java.util.*;
 import java.util.regex.Pattern;
 
 public class KafkaConsumerService<T> implements Closeable {

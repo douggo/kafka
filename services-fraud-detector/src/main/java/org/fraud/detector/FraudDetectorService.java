@@ -1,7 +1,8 @@
-package ecommerce.consumers;
+package org.fraud.detector;
 
-import ecommerce.model.Order;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.kafka.enterprise.KafkaConsumerService;
+import org.main.Order;
 
 import java.util.HashMap;
 

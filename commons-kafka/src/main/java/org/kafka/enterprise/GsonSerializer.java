@@ -1,4 +1,4 @@
-package ecommerce.model;
+package org.kafka.enterprise;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

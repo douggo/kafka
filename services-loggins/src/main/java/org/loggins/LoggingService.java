@@ -1,8 +1,10 @@
-package ecommerce.consumers;
+package org.loggins;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.common.serialization.StringDeserializer;
+import org.kafka.enterprise.KafkaConsumerService;
+
 import java.util.HashMap;
 import java.util.regex.Pattern;
 

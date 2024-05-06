@@ -1,4 +1,4 @@
-package ecommerce.model;
+package org.main;
 
 public class Email {
 

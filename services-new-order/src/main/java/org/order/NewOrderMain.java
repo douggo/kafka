@@ -1,7 +1,8 @@
-package ecommerce.producers;
+package org.order;
 
-import ecommerce.model.Email;
-import ecommerce.model.Order;
+import org.kafka.enterprise.KafkaDispatcher;
+import org.main.Email;
+import org.main.Order;
 
 import java.math.BigDecimal;
 import java.util.UUID;

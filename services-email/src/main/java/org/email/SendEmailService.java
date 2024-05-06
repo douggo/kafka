@@ -1,7 +1,8 @@
-package ecommerce.consumers;
+package org.email;
 
-import ecommerce.model.Email;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.kafka.enterprise.KafkaConsumerService;
+import org.main.Email;
 
 import java.util.HashMap;
 
